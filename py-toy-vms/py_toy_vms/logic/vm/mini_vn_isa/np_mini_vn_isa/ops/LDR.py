@@ -12,7 +12,7 @@ class LDR(Base):
     LDR_sr_lshift : int = 0
         
     def assemble_LDR(self, args : List[str])->int:
-        if len(args) != 3:
+        if len(args) != 2:
             raise Exception("Invalid arguments to LDR.")
         lr = (args[0] & self.LDR_lr_mask) << self.LDR_lr_lshift
         sr = (args[2] & self.LDR_sr_mask) << self.LDR_sr_lshift

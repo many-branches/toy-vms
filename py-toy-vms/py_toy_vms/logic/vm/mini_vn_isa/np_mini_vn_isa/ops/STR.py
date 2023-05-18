@@ -12,7 +12,7 @@ class STR(Base):
     STR_sr_lshift : int = 0
         
     def assemble_STR(self, args : List[str])->int:
-        if len(args) != 3:
+        if len(args) != 2:
             raise Exception("Invalid arguments to STR.")
         lr = (args[0] & self.STR_lr_mask) << self.STR_lr_lshift
         sr = (args[2] & self.STR_sr_mask) << self.STR_sr_lshift

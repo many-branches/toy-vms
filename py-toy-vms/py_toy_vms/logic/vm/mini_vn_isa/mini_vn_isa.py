@@ -37,7 +37,7 @@ class MiniVnIsa(Vm):
     def Cnzp(self, lr : int, rr : int, nzp : int, sr : int):
         pass
     
-    def GOTO(self, pc : int):
+    def GOTO(self, sr : int):
         pass
     
     def Bnzp(self, lr : int, rr : int, nzp : int, goto : int):

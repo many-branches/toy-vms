@@ -20,7 +20,7 @@ class Bnzp(Base):
     Bnzp_sr_lshift : int = 0
         
     def assemble_Bnzp(self, args : List[str])->int:
-        if len(args) != 3:
+        if len(args) != 4:
             raise Exception("Invalid arguments to Bnzp.")
         lr = (args[0] & self.Bnzp_lr_mask) << self.Bnzp_lr_lshift
         rr = (args[1] & self.Bnzp_rr_mask) << self.Bnzp_rr_lshift

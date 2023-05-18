@@ -19,7 +19,7 @@ class Cnzp(Base):
     Cnzp_sr_lshift : int = 0
         
     def assemble_Cnzp(self, args : List[str])->int:
-        if len(args) != 3:
+        if len(args) != 4:
             raise Exception("Invalid arguments to Cnzp.")
         lr = (args[0] & self.Cnzp_lr_mask) << self.Cnzp_lr_lshift
         rr = (args[1] & self.Cnzp_rr_mask) << self.Cnzp_rr_lshift

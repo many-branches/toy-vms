@@ -68,8 +68,8 @@ class Base(MiniVnIsa):
         "Bnzp" : 0b1010
     }
     
-    opcode_to_instruct : Dict[str, int] = {
-        {v:k  for k,v in instruct_to_opcode.items()}
+    opcode_to_instruct : Dict[int, str] = {
+        v:k  for k,v in instruct_to_opcode.items()
     }
     
     def form_opcode(self, instruct : str)->int:
@@ -109,3 +109,13 @@ class Base(MiniVnIsa):
     
     def tick(self):
         self.compute(self.program_memory[self.get_pc()])
+        
+    
+    def NULL(self, *args):
+        pass
+        
+    def assemble_NULL(self, args : List[str])->int:
+        return 0
+    
+    def proffer_NULL(self, add : int)->List[int]:
+        return []
