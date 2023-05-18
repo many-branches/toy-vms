@@ -10,6 +10,9 @@ class MiniVnIsa(Vm):
     def set_pc(self, val : int)->int:
         pass
     
+    def NULL(self, *args):
+        pass
+    
     def SET(self, sr : int, val : int):
         pass
     

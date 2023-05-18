@@ -101,5 +101,11 @@ class Base(MiniVnIsa):
             
         return int(n and z and p)
     
+    def compute(self, instr : int):
+        opcode_name = self.get_instruction_name(instr)
+        operation = getattr(self, opcode_name)
+        profferer = getattr(self, f"proffer_{opcode_name}")
+        operation(profferer(instr))
+    
     def tick(self):
         self.compute(self.program_memory[self.get_pc()])
