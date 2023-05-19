@@ -8,6 +8,7 @@ class Base(MiniVnIsa):
     opcode_width : int = 4
     register_file_addressability : int = 3
     program_space_addressability : int = 8
+    control_bit : int = 0
     
     register_file : np.ndarray
     program_memory : np.ndarray
@@ -20,6 +21,7 @@ class Base(MiniVnIsa):
         self.register_file = np.random.randint(2**self.width, size=2**self.register_file_addressability)
         self.program_memory = np.random.randint(2**self.width, size=2**self.program_space_addressability)
         self.states = np.ndarray(2**self.register_file_addressability + 2**self.program_space_addressability)
+        self.control_bit = 0
         
     def record_transition(self):
         self.states = np.append(
@@ -31,18 +33,11 @@ class Base(MiniVnIsa):
         )
         
     def get_pc(self) -> int:
-        val = self.register_file[self.pc_addr]
-        pc_bit = val & ((2**self.width) >> 1)
-        if pc_bit < 0:
-            self.register_file[self.pc_addr] = val + 1
-        else:
-            val = val - ((2**self.width) >> 1)
-            self.register_file[self.pc_addr] = val + 1
-        return val
+        return self.register_file[self.pc_addr]
+    
     
     def set_pc(self, val : int) -> int:
-        val = val + ((2**self.width) >> 1)
-        self.register_file[0] = val
+        self.register_file[self.pc_addr] = val
         return val
         
     def get_register_file(self) -> np.ndarray:
@@ -65,7 +60,8 @@ class Base(MiniVnIsa):
         "STR" : 0b0111,
         "Cnzp" : 0b1000,
         "GOTO" : 0b1001,
-        "Bnzp" : 0b1010
+        "Bnzp" : 0b1010,
+        "JUMP" : 0b1100
     }
     
     opcode_to_instruct : Dict[int, str] = {
@@ -78,7 +74,7 @@ class Base(MiniVnIsa):
     
     def get_instruction_name(self, instruct : int)->str:
         opcode = (instruct >> (self.width - self.opcode_width)) & ((2**4) - 1)
-        return self.opcode_to_instruct.get(opcode, "NONE")
+        return self.opcode_to_instruct.get(opcode, "NULL")
     
     def nzp(self, nzp : int, val : int)->int:
         
@@ -108,7 +104,13 @@ class Base(MiniVnIsa):
         operation(*profferer(instr))
     
     def tick(self):
-        self.compute(self.program_memory[self.get_pc()])
+        pc = self.get_pc()
+        instruction = self.program_memory[pc]
+        self.compute(instruction)
+        if self.control_bit > 0:
+            self.control_bit = 0
+        else:
+            self.set_pc(pc + 1)
         
     
     def NULL(self, *args):

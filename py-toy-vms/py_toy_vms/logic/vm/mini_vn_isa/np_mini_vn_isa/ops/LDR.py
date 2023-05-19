@@ -15,7 +15,7 @@ class LDR(Base):
         if len(args) != 2:
             raise Exception("Invalid arguments to LDR.")
         lr = (args[0] & self.LDR_lr_mask) << self.LDR_lr_lshift
-        sr = (args[2] & self.LDR_sr_mask) << self.LDR_sr_lshift
+        sr = (args[1] & self.LDR_sr_mask) << self.LDR_sr_lshift
         return self.form_opcode("LDR") + lr + sr
     
     def proffer_LDR(self, add : int)->List[int]:

@@ -23,8 +23,9 @@ class Cnzp(Base):
             raise Exception("Invalid arguments to Cnzp.")
         lr = (args[0] & self.Cnzp_lr_mask) << self.Cnzp_lr_lshift
         rr = (args[1] & self.Cnzp_rr_mask) << self.Cnzp_rr_lshift
-        sr = (args[2] & self.Cnzp_sr_mask) << self.Cnzp_sr_lshift
-        return self.form_opcode("Cnzp") + lr + rr + sr
+        nzp = (args[2] & self.Cnzp_nzp_mask) << self.Cnzp_nzp_lshift
+        sr = (args[3] & self.Cnzp_sr_mask) << self.Cnzp_sr_lshift
+        return self.form_opcode("Cnzp") + lr + rr + nzp + sr
     
     def proffer_Cnzp(self, add : int)->List[int]:
         lr = ((self.Cnzp_lr_mask << self.Cnzp_lr_lshift) & add) >> self.Cnzp_lr_lshift

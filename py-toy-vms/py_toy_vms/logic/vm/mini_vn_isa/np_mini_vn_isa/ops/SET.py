@@ -15,7 +15,7 @@ class SET(Base):
         if len(args) != 2:
             raise Exception("Invalid arguments to SET.")
         sr = (args[0] & self.SET_sr_mask) << self.SET_sr_lshift
-        val = (args[2] & self.SET_val_mask) << self.SET_val_lshift
+        val = (args[1] & self.SET_val_mask) << self.SET_val_lshift
         return self.form_opcode("SET") + sr + val
     
     def proffer_SET(self, add : int)->List[int]:

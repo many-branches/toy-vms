@@ -34,10 +34,10 @@ class Assembler(Base):
     def handle_line(self, line : str, line_count : int, labels : Dict[str, int])->Optional[str]:
         
         line = line.strip()
+        line = line.split("//")[0]
         if len(line) < 1:
             return None
-        if line.startswith("//"):
-            return None
+        
         if line.startswith("#"):
             return self.handle_label_line(line, line_count, labels)
         
@@ -62,7 +62,6 @@ class Assembler(Base):
             asm_line = self.handle_line(line, address + len(lines), labels)
             if asm_line is None:
                 continue
-            print(line, asm_line)
             lines.append(self.assemble(asm_line))
         
         for i, line in enumerate(lines):

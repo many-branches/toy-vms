@@ -15,7 +15,7 @@ class STR(Base):
         if len(args) != 2:
             raise Exception("Invalid arguments to STR.")
         lr = (args[0] & self.STR_lr_mask) << self.STR_lr_lshift
-        sr = (args[2] & self.STR_sr_mask) << self.STR_sr_lshift
+        sr = (args[1] & self.STR_sr_mask) << self.STR_sr_lshift
         return self.form_opcode("STR") + lr + sr
     
     def proffer_STR(self, add : int)->List[int]:

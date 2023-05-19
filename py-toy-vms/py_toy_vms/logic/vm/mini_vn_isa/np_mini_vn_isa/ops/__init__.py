@@ -2,3 +2,11 @@ from .ADD import ADD
 from .DIV import DIV
 from .MUL import MUL
 from .SUB import SUB
+from .SET import SET
+from .GOTO import GOTO
+from .STR import STR
+from .LDR import LDR
+from .STR import STR
+from .Bnzp import Bnzp
+from .Cnzp import Cnzp
+from .JUMP import JUMP

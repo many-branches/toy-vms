@@ -40,6 +40,9 @@ class MiniVnIsa(Vm):
     def GOTO(self, sr : int):
         pass
     
+    def JUMP(self, val : int):
+        pass
+    
     def Bnzp(self, lr : int, rr : int, nzp : int, goto : int):
         pass
     
