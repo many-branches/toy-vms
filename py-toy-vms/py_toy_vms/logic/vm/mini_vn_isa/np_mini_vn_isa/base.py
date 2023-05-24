@@ -12,7 +12,7 @@ class Base(MiniVnIsa):
     
     register_file : np.ndarray
     program_memory : np.ndarray
-    states : np.ndarray
+    states : List[np.ndarray]
     
     pc_addr: int = 0
     
@@ -20,15 +20,14 @@ class Base(MiniVnIsa):
         super().__init__()
         self.register_file = np.random.randint(2**self.width, size=2**self.register_file_addressability)
         self.program_memory = np.random.randint(2**self.width, size=2**self.program_space_addressability)
-        self.states = np.ndarray(2**self.register_file_addressability + 2**self.program_space_addressability)
+        self.states = []
         self.control_bit = 0
         
     def record_transition(self):
-        self.states = np.append(
-            self.states,
+        self.states.append(
             np.concatenate(
-                self.register_file,
-                self.program_memory
+                (self.register_file, self.program_memory),
+                axis=0
             )
         )
         
@@ -47,7 +46,7 @@ class Base(MiniVnIsa):
         return self.program_memory
     
     def get_states(self) -> np.ndarray:
-        return self.states
+        return np.asarray(self.states)
     
     instruct_to_opcode : Dict[str, int] = {
         "NULL" : 0,
@@ -111,6 +110,7 @@ class Base(MiniVnIsa):
             self.control_bit = 0
         else:
             self.set_pc(pc + 1)
+        self.record_transition()
         
     
     def NULL(self, *args):

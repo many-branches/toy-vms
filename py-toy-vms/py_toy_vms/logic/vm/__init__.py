@@ -1,0 +1,1 @@
+from .mini_vn_isa import NpMiniVnIsa
